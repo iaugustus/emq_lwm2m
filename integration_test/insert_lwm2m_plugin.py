@@ -12,7 +12,7 @@ def change_makefile():
         f.close()
         
 
-    f = open("emq-rel/relx.config", "rb")
+    f = open("$(CURDIR)/relx.config", "rb")
     data = f.read()
     f.close()
 
