@@ -1,41 +1,41 @@
 
 
 def change_makefile():
-    f = open("emqx-rel/Makefile", "rb")
-    data = f.read()
-    f.close()
-
-    if data.find("emqx_lwm2m") < 0:
-        data = data.replace("emqx_auth_pgsql emqx_auth_mongo", "emqx_auth_pgsql emqx_auth_mongo emqx_lwm2m\n\ndep_emqx_lwm2m = git https://github.com/emqx/emqx-lwm2m\n\n")
-        f = open("emqx-rel/Makefile", "wb")
-        f.write(data)
-        f.close()
-        
-
-    f = open("emqx-rel/relx.config", "rb")
+    f = open("emq-rel/Makefile", "rb")
     data = f.read()
     f.close()
 
     if data.find("emq_lwm2m") < 0:
-        f = open("emqx-rel/relx.config", "wb")
-        data = data.replace("{emqx_auth_mongo, load}", "{emqx_auth_mongo, load},\n{emqx_lwm2m, load}")
-        data = data.replace('{template, "rel/conf/emqx.conf", "etc/emqx.conf"},', \
-                '{template, "rel/conf/emqx.conf", "etc/emqx.conf"},'+  \
-                '\n    {template, "rel/conf/plugins/emqx_lwm2m.conf", "etc/plugins/emqx_lwm2m.conf"},'+  \
-                '\n    {copy, "deps/emqx_lwm2m/lwm2m_xml", "etc/"},')
+        data = data.replace("emq_auth_pgsql emq_auth_mongo", "emq_auth_pgsql emq_auth_mongo emq_lwm2m\n\ndep_emq_lwm2m = git https://github.com/emq/emq-lwm2m\n\n")
+        f = open("emq-rel/Makefile", "wb")
+        f.write(data)
+        f.close()
+        
+
+    f = open("emq-rel/relx.config", "rb")
+    data = f.read()
+    f.close()
+
+    if data.find("emq_lwm2m") < 0:
+        f = open("emq-rel/relx.config", "wb")
+        data = data.replace("{emq_auth_mongo, load}", "{emq_auth_mongo, load},\n{emq_lwm2m, load}")
+        data = data.replace('{template, "rel/conf/emq.conf", "etc/emq.conf"},', \
+                '{template, "rel/conf/emq.conf", "etc/emq.conf"},'+  \
+                '\n    {template, "rel/conf/plugins/emq_lwm2m.conf", "etc/plugins/emq_lwm2m.conf"},'+  \
+                '\n    {copy, "deps/emq_lwm2m/lwm2m_xml", "etc/"},')
         f.write(data)
         f.close()
         
         
         
 def change_lwm2m_config():
-    f = open("emqx-rel/deps/emqx_lwm2m/etc/emqx_lwm2m.conf", "rb")
+    f = open("emq-rel/deps/emq_lwm2m/etc/emq_lwm2m.conf", "rb")
     data = f.read()
     f.close()
     
     if data.find("5783") > 0:
         data = data.replace("5783", "5683")
-        f = open("emqx-rel/deps/emqx_lwm2m/etc/emqx_lwm2m.conf", "wb")
+        f = open("emq-rel/deps/emq_lwm2m/etc/emq_lwm2m.conf", "wb")
         f.write(data)
         f.close()
     

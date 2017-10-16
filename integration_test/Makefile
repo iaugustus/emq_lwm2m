@@ -2,7 +2,7 @@
 .PHONY: clean, clean_result, start_broker  stop_broker  case1 case2 case3
 
 
-EMQ    = emqx-rel/relx.config
+EMQ    = emq-rel/relx.config
 WAKAAMA  = build_wakaama/lightclient
 PAHO_PYTHON = paho/mqtt/client.py
 
@@ -15,16 +15,16 @@ clean_result:
 	-rm -f case*.txt
 	
 start_broker:
-	-rm -f emqx-rel/_rel/emqx/log/*
-	-emqx-rel/_rel/emqx/bin/emqx stop
+	-rm -f emq-rel/_rel/emq/log/*
+	-emq-rel/_rel/emq/bin/emq stop
 	sleep 3
-	emqx-rel/_rel/emqx/bin/emqx start
+	emq-rel/_rel/emq/bin/emq start
 	sleep 1
-	emqx-rel/_rel/emqx/bin/emqx_ctl plugins load emqx_lwm2m
+	emq-rel/_rel/emq/bin/emq_ctl plugins load emq_lwm2m
 
 
 stop_broker:
-	-emqx-rel/_rel/emqx/bin/emqx stop
+	-emq-rel/_rel/emq/bin/emq stop
 	
 
 case1:
@@ -44,28 +44,28 @@ case3:
 	
 	
 $(EMQ):
-	git clone https://github.com/emqx/emqx-rel.git
-	git clone https://github.com/emqx/emqx-lwm2m.git
-	@echo "update emqx-lwm2m with this development code"
-	mv emqx-lwm2m  emqx_lwm2m
-	-rm -rf emqx_lwm2m/etc
-	-rm -rf emqx_lwm2m/include
-	-rm -rf emqx_lwm2m/priv
-	-rm -rf emqx_lwm2m/src
-	-rm -rf emqx_lwm2m/Makefile
-	-rm -rf emqx_lwm2m/erlang.mk
-	cp -rf ../etc       emqx_lwm2m/
-	cp -rf ../include   emqx_lwm2m/
-	cp -rf ../priv      emqx_lwm2m/
-	cp -rf ../src       emqx_lwm2m/
-	cp -rf ../Makefile  emqx_lwm2m/Makefile
-	cp -rf ../erlang.mk emqx_lwm2m/erlang.mk
-	-mkdir emqx-rel/deps
-	mv emqx_lwm2m  emqx-rel/deps/
+	git clone https://github.com/emq/emq-rel.git
+	git clone https://github.com/emq/emq-lwm2m.git
+	@echo "update emq-lwm2m with this development code"
+	mv emq-lwm2m  emq_lwm2m
+	-rm -rf emq_lwm2m/etc
+	-rm -rf emq_lwm2m/include
+	-rm -rf emq_lwm2m/priv
+	-rm -rf emq_lwm2m/src
+	-rm -rf emq_lwm2m/Makefile
+	-rm -rf emq_lwm2m/erlang.mk
+	cp -rf ../etc       emq_lwm2m/
+	cp -rf ../include   emq_lwm2m/
+	cp -rf ../priv      emq_lwm2m/
+	cp -rf ../src       emq_lwm2m/
+	cp -rf ../Makefile  emq_lwm2m/Makefile
+	cp -rf ../erlang.mk emq_lwm2m/erlang.mk
+	-mkdir emq-rel/deps
+	mv emq_lwm2m  emq-rel/deps/
 	@echo "start building ..."
 	python insert_lwm2m_plugin.py
-	make -C emqx-rel -f Makefile
-	-cp -rf ../lwm2m_xml  emqx-rel/_rel/emqx/etc/
+	make -C emq-rel -f Makefile
+	-cp -rf ../lwm2m_xml  emq-rel/_rel/emq/etc/
 
 
 w:
@@ -92,26 +92,26 @@ r: rebuild_emq
 	
 	
 rebuild_emq:
-	-emqx-rel/_rel/emqx/bin/emqx stop
-	-rm -rf emqx-rel/deps/emqx_lwm2m/etc
-	-rm -rf emqx-rel/deps/emqx_lwm2m/include
-	-rm -rf emqx-rel/deps/emqx_lwm2m/priv
-	-rm -rf emqx-rel/deps/emqx_lwm2m/src
-	-rm -rf emqx-rel/deps/emqx_lwm2m/Makefile
-	-rm -rf emqx-rel/deps/emqx_lwm2m/erlang.mk
-	cp -rf ../etc       emqx-rel/deps/emqx_lwm2m/
-	cp -rf ../include   emqx-rel/deps/emqx_lwm2m/
-	cp -rf ../priv      emqx-rel/deps/emqx_lwm2m/
-	cp -rf ../src       emqx-rel/deps/emqx_lwm2m/
-	cp -rf ../Makefile  emqx-rel/deps/emqx_lwm2m/Makefile
-	cp -rf ../erlang.mk emqx-rel/deps/emqx_lwm2m/erlang.mk
-	make -C emqx-rel -f Makefile
+	-emq-rel/_rel/emq/bin/emq stop
+	-rm -rf emq-rel/deps/emq_lwm2m/etc
+	-rm -rf emq-rel/deps/emq_lwm2m/include
+	-rm -rf emq-rel/deps/emq_lwm2m/priv
+	-rm -rf emq-rel/deps/emq_lwm2m/src
+	-rm -rf emq-rel/deps/emq_lwm2m/Makefile
+	-rm -rf emq-rel/deps/emq_lwm2m/erlang.mk
+	cp -rf ../etc       emq-rel/deps/emq_lwm2m/
+	cp -rf ../include   emq-rel/deps/emq_lwm2m/
+	cp -rf ../priv      emq-rel/deps/emq_lwm2m/
+	cp -rf ../src       emq-rel/deps/emq_lwm2m/
+	cp -rf ../Makefile  emq-rel/deps/emq_lwm2m/Makefile
+	cp -rf ../erlang.mk emq-rel/deps/emq_lwm2m/erlang.mk
+	make -C emq-rel -f Makefile
 	
 	
 clean: clean_result
 	-rm -f client/*.exe
 	-rm -f client/*.o
-	-rm -rf emqx-rel
+	-rm -rf emq-rel
 	-rm -rf build_wakaama
 	-rm -rf wakaama
 	

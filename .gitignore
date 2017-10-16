@@ -10,9 +10,9 @@ data/
 .idea/
 logs/
 *.beam
-emqx_coap.d
+emq_coap.d
 
-integration_test/emqx-rel/
+integration_test/emq-rel/
 integration_test/build_wakaama/
 integration_test/case*.txt
 integration_test/paho/
