@@ -21,9 +21,9 @@
 -behaviour(gen_server).
 
 -include("emq_lwm2m.hrl").
--include_lib("emq/include/emq.hrl").
--include_lib("emq/include/emq_mqtt.hrl").
--include_lib("emq/include/emq_macros.hrl").
+-include_lib("emqttd/include/emqttd.hrl").
+-include_lib("emqttd/include/emqttd_protocol.hrl").
+-include_lib("emqttd/include/emq_macros.hrl").
 
 
 %% API.
